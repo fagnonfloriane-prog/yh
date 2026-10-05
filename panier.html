@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panier — Flori's Market</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Inter',sans-serif;color:#1A1A1A;background:#fff;line-height:1.7}
+    h1,h2,h3,h4{font-family:'Playfair Display',Georgia,serif;font-weight:600;line-height:1.25}
+    a{text-decoration:none;color:inherit}
+    .container{max-width:1000px;margin:0 auto;padding:0 24px}
+    .btn{display:inline-block;padding:14px 36px;font-family:'Inter',sans-serif;font-weight:600;font-size:.9rem;letter-spacing:.5px;text-transform:uppercase;border:none;cursor:pointer;transition:all .3s}
+    .btn-gold{background:#D4AF37;color:#fff}
+    .btn-gold:hover{background:#b8941f;transform:translateY(-2px)}
+    .btn-black{background:#000;color:#fff}
+    .btn-black:hover{background:#222}
+    .btn-outline{background:transparent;border:1.5px solid #1A1A1A;color:#1A1A1A}
+    .btn-outline:hover{background:#1A1A1A;color:#fff}
+    .btn-sm{padding:10px 20px;font-size:.78rem}
+    .gold{color:#D4AF37}
+
+    /* HEADER */
+    .header{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.97);backdrop-filter:blur(10px);border-bottom:1px solid #eee}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;max-width:1200px;margin:0 auto}
+    .logo{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;letter-spacing:1px}
+    .logo span{color:#D4AF37}
+    .nav-links{display:flex;gap:28px;align-items:center}
+    .nav-links a{font-size:.85rem;font-weight:500;text-transform:uppercase;letter-spacing:1px;position:relative}
+    .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:#D4AF37;transition:width .3s}
+    .nav-links a:hover::after{width:100%}
+    .nav-icons{display:flex;gap:16px;align-items:center}
+    .nav-icons a{position:relative}
+    .cart-count{position:absolute;top:-8px;right:-10px;background:#D4AF37;color:#fff;font-size:.6rem;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700}
+    .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer}
+    .hamburger span{width:24px;height:2px;background:#1A1A1A}
+
+    /* BANNER */
+    .page-banner{padding:80px 0 40px;background:linear-gradient(135deg,#fafafa,#f0ece4);text-align:center}
+    .page-banner h1{font-size:2.2rem;margin-bottom:6px}
+    .breadcrumb{display:flex;gap:8px;justify-content:center;font-size:.78rem;color:#aaa;margin-top:12px}
+    .breadcrumb a{color:#999}.breadcrumb a:hover{color:#D4AF37}
+
+    /* CART */
+    .cart-section{padding:50px 0 80px}
+    .cart-empty{text-align:center;padding:60px 0}
+    .cart-empty svg{width:80px;height:80px;stroke:#ddd;fill:none;stroke-width:1}
+    .cart-empty h2{font-size:1.5rem;margin:20px 0 8px}
+    .cart-empty p{color:#888;font-size:.9rem;margin-bottom:24px}
+    .cart-table{width:100%;border-collapse:collapse;margin-bottom:32px}
+    .cart-table th{text-align:left;padding:12px 16px;font-size:.75rem;text-transform:uppercase;letter-spacing:1px;color:#999;border-bottom:2px solid #f0f0f0}
+    .cart-table td{padding:16px;border-bottom:1px solid #f0f0f0;vertical-align:middle}
+    .cart-item{display:flex;align-items:center;gap:14px}
+    .cart-item-img{width:64px;height:64px;background:#f9f9f9;border-radius:8px;display:flex;align-items:center;justify-content:center}
+    .cart-item-img svg{width:32px;height:32px;opacity:.5}
+    .cart-item-info .name{font-weight:600;font-size:.9rem}
+    .cart-item-info .attr{font-size:.75rem;color:#999}
+    .qty-control{display:flex;align-items:center;gap:0;border:1px solid #ddd;border-radius:6px;overflow:hidden}
+    .qty-control button{width:32px;height:32px;border:none;background:#f9f9f9;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center}
+    .qty-control button:hover{background:#eee}
+    .qty-control span{padding:0 12px;font-size:.85rem;font-weight:600;min-width:32px;text-align:center}
+    .item-total{font-weight:700;font-size:.95rem}
+    .remove-btn{background:none;border:none;color:#ccc;cursor:pointer;font-size:1.1rem;transition:color .3s}
+    .remove-btn:hover{color:#e53935}
+
+    /* SUMMARY */
+    .cart-summary{background:#F9F9F9;border:1px solid #f0f0f0;border-radius:12px;padding:28px}
+    .cart-summary h3{font-size:1.2rem;margin-bottom:18px}
+    .summary-row{display:flex;justify-content:space-between;padding:8px 0;font-size:.88rem}
+    .summary-row.total{border-top:2px solid #e8e0d0;padding-top:14px;margin-top:10px;font-size:1.15rem;font-weight:700}
+    .summary-row .label{color:#888}
+    .delivery-options{margin:20px 0}
+    .delivery-option{display:flex;align-items:center;gap:10px;padding:10px 0;cursor:pointer}
+    .delivery-option input[type=radio]{accent-color:#D4AF37;width:16px;height:16px}
+    .delivery-option .d-label{font-size:.85rem;font-weight:500}
+    .delivery-option .d-price{font-size:.82rem;color:#888;margin-left:auto}
+    .payment-methods{margin:20px 0;padding:16px;background:#fff;border-radius:8px;border:1px solid #f0f0f0}
+    .payment-methods h4{font-size:.82rem;text-transform:uppercase;letter-spacing:1px;color:#999;margin-bottom:12px}
+    .pay-option{display:flex;align-items:center;gap:10px;padding:8px 0;cursor:pointer}
+    .pay-option input[type=radio]{accent-color:#D4AF37;width:16px;height:16px}
+    .pay-option span{font-size:.85rem}
+    .checkout-btn{width:100%;margin-top:16px}
+
+    /* FOOTER */
+    .footer{background:#1A1A1A;color:#ccc;padding:40px 0;text-align:center}
+    .footer p{font-size:.78rem;color:#666}
+
+    /* WHATSAPP */
+    .whatsapp-float{position:fixed;bottom:24px;right:24px;z-index:999;width:60px;height:60px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.4);transition:transform .3s}
+    .whatsapp-float:hover{transform:scale(1.1)}
+    .whatsapp-float svg{width:28px;height:28px;fill:#fff}
+
+    .mobile-menu{display:none;position:fixed;inset:0;z-index:200;background:rgba(255,255,255,.98);flex-direction:column;align-items:center;justify-content:center;gap:24px}
+    .mobile-menu.active{display:flex}
+    .mobile-menu a{font-size:1.2rem;font-family:'Playfair Display',serif}
+    .mobile-close{position:absolute;top:20px;right:24px;font-size:1.6rem;cursor:pointer}
+
+    .two-col{display:grid;grid-template-columns:1.4fr 0.6fr;gap:32px;align-items:start}
+    @media(max-width:768px){
+      .nav-links{display:none}.hamburger{display:flex}
+      .two-col{grid-template-columns:1fr}
+      .page-banner h1{font-size:1.6rem}
+      .cart-table th:nth-child(4),.cart-table td:nth-child(4){display:none}
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <nav class="nav">
+      <a href="index.html" class="logo">Flori's <span>Market</span></a>
+      <div class="nav-links">
+        <a href="index.html">Accueil</a>
+        <a href="boutique.html">Boutique</a>
+        <a href="a-propos.html">À Propos</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="nav-icons">
+        <a href="panier.html" aria-label="Panier">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+          <span class="cart-count" id="cartCount">0</span>
+        </a>
+        <div class="hamburger" onclick="toggleMobile()"><span></span><span></span><span></span></div>
+      </div>
+    </nav>
+  </header>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-close" onclick="toggleMobile()">&times;</div>
+    <a href="index.html">Accueil</a><a href="boutique.html">Boutique</a><a href="a-propos.html">À Propos</a><a href="contact.html">Contact</a><a href="panier.html">Panier</a>
+  </div>
+
+  <section class="page-banner">
+    <div class="container">
+      <h1>Votre <span class="gold">Panier</span></h1>
+      <div class="breadcrumb"><a href="index.html">Accueil</a> <span>/</span> <span>Panier</span></div>
+    </div>
+  </section>
+
+  <section class="cart-section">
+    <div class="container">
+      <div id="cartContent"></div>
+    </div>
+  </section>
+
+  <footer class="footer"><p>© 2026 Flori's Market — Tous droits réservés</p></footer>
+
+  <a href="https://wa.me/22990000000" class="whatsapp-float" target="_blank" aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.875.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.88 11.88 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+  <script>
+    const DELIVERY_FEE=2000;
+    function getCart(){return JSON.parse(localStorage.getItem('floris_cart')||'[]')}
+    function saveCart(c){localStorage.setItem('floris_cart',JSON.stringify(c));updateCount()}
+    function updateCount(){document.getElementById('cartCount').textContent=getCart().length}
+    function formatPrice(n){return n.toLocaleString('fr-FR')+' FCFA'}
+
+    function renderCart(){
+      const cart=getCart();
+      const el=document.getElementById('cartContent');
+      if(cart.length===0){
+        el.innerHTML=`<div class="cart-empty">
+          <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+          <h2>Votre panier est vide</h2>
+          <p>Découvrez nos fragrances et ajoutez vos coups de cœur</p>
+          <a href="boutique.html" class="btn btn-gold">Parcourir la Boutique</a>
+        </div>`;
+        return;
+      }
+      // Group items
+      const grouped={};
+      cart.forEach(item=>{if(grouped[item.name]){grouped[item.name].q++}else{grouped[item.name]={...item,q:1}}});
+      const items=Object.values(grouped);
+      const subtotal=items.reduce((s,i)=>s+i.price*i.q,0);
+      const delivery=DELIVERY_FEE;
+      const total=subtotal+delivery;
+
+      let html=`<div class="two-col"><div><table class="cart-table">
+        <thead><tr><th>Produit</th><th>Prix</th><th>Quantité</th><th>Total</th><th></th></tr></thead><tbody>`;
+      items.forEach((item,idx)=>{
+        html+=`<tr>
+          <td><div class="cart-item"><div class="cart-item-img"><svg viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/></svg></div><div class="cart-item-info"><div class="name">${item.name}</div></div></div></td>
+          <td>${formatPrice(item.price)}</td>
+          <td><div class="qty-control"><button onclick="changeQty('${item.name}',-1)">−</button><span>${item.q}</span><button onclick="changeQty('${item.name}',1)">+</button></div></td>
+          <td class="item-total">${formatPrice(item.price*item.q)}</td>
+          <td><button class="remove-btn" onclick="removeItem('${item.name}')">✕</button></td>
+        </tr>`;
+      });
+      html+=`</tbody></table></div>`;
+
+      html+=`<div class="cart-summary">
+        <h3>Résumé de la Commande</h3>
+        <div class="summary-row"><span class="label">Sous-total</span><span>${formatPrice(subtotal)}</span></div>
+        <div class="delivery-options">
+          <label class="delivery-option"><input type="radio" name="delivery" value="express" checked onchange="updateDelivery(this.value)"><span class="d-label">Livraison Express</span><span class="d-price">${formatPrice(2000)}</span></label>
+          <label class="delivery-option"><input type="radio" name="delivery" value="collect" onchange="updateDelivery(this.value)"><span class="d-label">Click & Collect</span><span class="d-price">Gratuit</span></label>
+        </div>
+        <div class="payment-methods">
+          <h4>Mode de Paiement</h4>
+          <label class="pay-option"><input type="radio" name="payment" value="mtn" checked><span>MTN Mobile Money</span></label>
+          <label class="pay-option"><input type="radio" name="payment" value="moov"><span>Moov Money</span></label>
+          <label class="pay-option"><input type="radio" name="payment" value="wave"><span>Wave</span></label>
+          <label class="pay-option"><input type="radio" name="payment" value="card"><span>Carte Bancaire</span></label>
+        </div>
+        <div class="summary-row total" id="totalRow"><span>Total</span><span>${formatPrice(total)}</span></div>
+        <button class="btn btn-gold checkout-btn" onclick="checkout()">Valider la Commande</button>
+        <a href="boutique.html" class="btn btn-outline btn-sm" style="display:block;text-align:center;margin-top:10px">Continuer les Achats</a>
+      </div>`;
+
+      html+=`</div>`;
+      el.innerHTML=html;
+    }
+
+    function changeQty(name,delta){
+      const cart=getCart();
+      if(delta>0){cart.push({name,price:cart.find(i=>i.name===name).price,q:1})}
+      else{const idx=cart.findIndex(i=>i.name===name);if(idx>-1)cart.splice(idx,1)}
+      saveCart(cart);renderCart();
+    }
+    function removeItem(name){
+      const cart=getCart().filter(i=>i.name!==name);
+      saveCart(cart);renderCart();
+    }
+    function updateDelivery(val){
+      const cart=getCart();
+      const grouped={};
+      cart.forEach(i=>{if(grouped[i.name]){grouped[i.name].q++}else{grouped[i.name]={...i,q:1}}});
+      const items=Object.values(grouped);
+      const sub=items.reduce((s,i)=>s+i.price*i.q,0);
+      const del=val==='express'?2000:0;
+      const totalRow=document.getElementById('totalRow');
+      if(totalRow)totalRow.innerHTML=`<span>Total</span><span>${formatPrice(sub+del)}</span>`;
+    }
+    function checkout(){
+      alert('Merci pour votre commande ! 🎉\nVous serez redirigé vers la page de paiement FedaPay/Paystack.\n\nPour une commande rapide, contactez-nous sur WhatsApp : +229 90 00 00 00');
+    }
+    updateCount();renderCart();
+    function toggleMobile(){document.getElementById('mobileMenu').classList.toggle('active')}
+  </script>
+</body>
+</html>

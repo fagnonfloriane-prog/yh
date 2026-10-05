@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>À Propos — Flori's Market</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Inter',sans-serif;color:#1A1A1A;background:#fff;line-height:1.7}
+    h1,h2,h3,h4{font-family:'Playfair Display',Georgia,serif;font-weight:600;line-height:1.25}
+    a{text-decoration:none;color:inherit}
+    img{max-width:100%;display:block}
+    .container{max-width:1100px;margin:0 auto;padding:0 24px}
+    .btn{display:inline-block;padding:14px 36px;font-family:'Inter',sans-serif;font-weight:600;font-size:.9rem;letter-spacing:.5px;text-transform:uppercase;border:none;cursor:pointer;transition:all .3s}
+    .btn-gold{background:#D4AF37;color:#fff}
+    .btn-gold:hover{background:#b8941f;transform:translateY(-2px)}
+    .btn-outline{background:transparent;border:1.5px solid #1A1A1A;color:#1A1A1A}
+    .btn-outline:hover{background:#1A1A1A;color:#fff}
+    .gold{color:#D4AF37}
+
+    /* HEADER */
+    .header{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.97);backdrop-filter:blur(10px);border-bottom:1px solid #eee}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;max-width:1200px;margin:0 auto}
+    .logo{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;letter-spacing:1px}
+    .logo span{color:#D4AF37}
+    .nav-links{display:flex;gap:28px;align-items:center}
+    .nav-links a{font-size:.85rem;font-weight:500;text-transform:uppercase;letter-spacing:1px;position:relative}
+    .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:#D4AF37;transition:width .3s}
+    .nav-links a:hover::after{width:100%}
+    .nav-links a.active::after{width:100%}
+    .nav-icons{display:flex;gap:16px;align-items:center}
+    .nav-icons a{position:relative}
+    .cart-count{position:absolute;top:-8px;right:-10px;background:#D4AF37;color:#fff;font-size:.6rem;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700}
+    .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer}
+    .hamburger span{width:24px;height:2px;background:#1A1A1A}
+
+    /* BANNER */
+    .page-banner{padding:100px 0 60px;background:linear-gradient(135deg,#fafafa,#f0ece4);text-align:center}
+    .page-banner h1{font-size:2.6rem;margin-bottom:8px}
+    .page-banner p{color:#888;font-size:.95rem}
+    .breadcrumb{display:flex;gap:8px;justify-content:center;font-size:.78rem;color:#aaa;margin-top:18px}
+    .breadcrumb a{color:#999}.breadcrumb a:hover{color:#D4AF37}
+
+    /* STORY */
+    .story-section{padding:80px 0}
+    .story-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+    .story-visual{background:linear-gradient(135deg,#e8e0d0,#f0ece4);border-radius:16px;aspect-ratio:1;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+    .story-visual::before{content:'F';font-family:'Playfair Display',serif;font-size:12rem;color:rgba(212,175,55,.08);position:absolute}
+    .story-visual svg{width:65%;height:65%;opacity:.35}
+    .story-text h2{font-size:2rem;margin-bottom:16px}
+    .story-text p{color:#555;font-size:.92rem;margin-bottom:16px;line-height:1.8}
+    .story-text blockquote{border-left:3px solid #D4AF37;padding-left:20px;margin:24px 0;font-style:italic;color:#777;font-size:.95rem}
+
+    /* VALUES */
+    .values-section{padding:80px 0;background:#F9F9F9}
+    .values-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:32px}
+    .value-card{background:#fff;border:1px solid #f0f0f0;border-radius:12px;padding:32px;text-align:center;transition:all .3s}
+    .value-card:hover{transform:translateY(-4px);box-shadow:0 8px 30px rgba(0,0,0,.06)}
+    .value-icon{width:60px;height:60px;margin:0 auto 18px;background:linear-gradient(135deg,#f0ece4,#e8e0d0);border-radius:50%;display:flex;align-items:center;justify-content:center}
+    .value-icon svg{width:28px;height:28px;stroke:#D4AF37;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+    .value-card h3{font-size:1.1rem;margin-bottom:8px}
+    .value-card p{font-size:.85rem;color:#888}
+
+    /* TIMELINE */
+    .timeline-section{padding:80px 0}
+    .timeline{max-width:600px;margin:0 auto;position:relative;padding-left:40px}
+    .timeline::before{content:'';position:absolute;left:15px;top:0;bottom:0;width:2px;background:#e8e0d0}
+    .timeline-item{position:relative;margin-bottom:40px}
+    .timeline-item::before{content:'';position:absolute;left:-29px;top:4px;width:14px;height:14px;border-radius:50%;background:#D4AF37;border:3px solid #fff;box-shadow:0 0 0 2px #D4AF37}
+    .timeline-item .year{font-family:'Playfair Display',serif;font-size:1.1rem;color:#D4AF37;margin-bottom:4px}
+    .timeline-item p{font-size:.88rem;color:#666}
+
+    /* CTA */
+    .cta-section{padding:80px 0;background:linear-gradient(135deg,#1A1A1A,#2a2a2a);color:#fff;text-align:center}
+    .cta-section h2{font-size:2rem;margin-bottom:12px}
+    .cta-section p{color:#aaa;margin-bottom:28px;font-size:.92rem}
+
+    /* FOOTER */
+    .footer{background:#1A1A1A;color:#ccc;padding:40px 0;text-align:center}
+    .footer p{font-size:.78rem;color:#666}
+
+    /* WHATSAPP */
+    .whatsapp-float{position:fixed;bottom:24px;right:24px;z-index:999;width:60px;height:60px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.4);transition:transform .3s}
+    .whatsapp-float:hover{transform:scale(1.1)}
+    .whatsapp-float svg{width:28px;height:28px;fill:#fff}
+
+    .mobile-menu{display:none;position:fixed;inset:0;z-index:200;background:rgba(255,255,255,.98);flex-direction:column;align-items:center;justify-content:center;gap:24px}
+    .mobile-menu.active{display:flex}
+    .mobile-menu a{font-size:1.2rem;font-family:'Playfair Display',serif}
+    .mobile-close{position:absolute;top:20px;right:24px;font-size:1.6rem;cursor:pointer}
+
+    @media(max-width:768px){
+      .nav-links{display:none}.hamburger{display:flex}
+      .story-grid{grid-template-columns:1fr;gap:30px}
+      .page-banner h1{font-size:1.8rem}
+      .values-grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <nav class="nav">
+      <a href="index.html" class="logo">Flori's <span>Market</span></a>
+      <div class="nav-links">
+        <a href="index.html">Accueil</a>
+        <a href="boutique.html">Boutique</a>
+        <a href="a-propos.html" class="active">À Propos</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="nav-icons">
+        <a href="panier.html" aria-label="Panier">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+          <span class="cart-count" id="cartCount">0</span>
+        </a>
+        <div class="hamburger" onclick="toggleMobile()"><span></span><span></span><span></span></div>
+      </div>
+    </nav>
+  </header>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-close" onclick="toggleMobile()">&times;</div>
+    <a href="index.html">Accueil</a><a href="boutique.html">Boutique</a><a href="a-propos.html">À Propos</a><a href="contact.html">Contact</a><a href="panier.html">Panier</a>
+  </div>
+
+  <section class="page-banner">
+    <div class="container">
+      <h1>Notre <span class="gold">Histoire</span></h1>
+      <p>La passion du parfum, l'engagement de l'authenticité</p>
+      <div class="breadcrumb"><a href="index.html">Accueil</a> <span>/</span> <span>À Propos</span></div>
+    </div>
+  </section>
+
+  <!-- STORY -->
+  <section class="story-section">
+    <div class="container">
+      <div class="story-grid">
+        <div class="story-visual">
+          <svg viewBox="0 0 300 400" fill="none"><defs><linearGradient id="vs" x1="150" y1="0" x2="150" y2="400"><stop offset="0%" stop-color="#D4AF37"/><stop offset="100%" stop-color="#b8941f"/></linearGradient></defs><rect x="60" y="100" width="180" height="260" rx="16" fill="url(#vs)" opacity=".15"/><rect x="100" y="50" width="100" height="60" rx="8" fill="url(#vs)" opacity=".1"/><rect x="120" y="10" width="60" height="50" rx="6" fill="url(#vs)" opacity=".08"/><circle cx="150" cy="-5" r="20" fill="url(#vs)" opacity=".06"/><text x="150" y="260" text-anchor="middle" font-family="Playfair Display,serif" font-size="48" fill="#D4AF37" opacity=".3">Flori's</text></svg>
+        </div>
+        <div class="story-text">
+          <h2>De Cotonou au Monde, <span class="gold">avec Passion</span></h2>
+          <p>Flori's Market est née d'une conviction simple : chaque personne mérite de porter un parfum d'exception, sans compromis sur la qualité ni sur l'accessibilité.</p>
+          <p>Fondée à Cotonou, au cœur du Bénin, notre parfumerie en ligne sélectionne avec soin chaque flacon auprès de circuits officiels. Nous garantissons l'authenticité absolue de chaque fragrance que nous proposons.</p>
+          <blockquote>« Le parfum est la forme invisible de l'élégance. »</blockquote>
+          <p>Notre mission est de rendre l'univers de la haute parfumerie accessible à tous, en offrant un service client personnalisé, une livraison fiable et des prix justes.</p>
+          <a href="boutique.html" class="btn btn-gold" style="margin-top:20px">Découvrir nos Parfums</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALUES -->
+  <section class="values-section">
+    <div class="container">
+      <h2 style="text-align:center;font-size:2rem;margin-bottom:12px">Nos <span class="gold">Valeurs</span></h2>
+      <p style="text-align:center;color:#888;font-size:.95rem;margin-bottom:48px">Ce qui guide chacun de nos choix</p>
+      <div class="values-grid">
+        <div class="value-card">
+          <div class="value-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3>Authenticité</h3>
+          <p>Chaque parfum provient exclusivement de circuits officiels. Aucune contrefaçon, aucun compromis.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-icon">
+            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+          </div>
+          <h3>Passion</h3>
+          <p>Nous choisissons chaque fragrance avec amour et expertise, pour vous offrir le meilleur.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-icon">
+            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+          </div>
+          <h3>Proximité</h3>
+          <p>Un service client humain et réactif, disponible via WhatsApp pour vous conseiller.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-icon">
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <h3>Excellence</h3>
+          <p>De la sélection à la livraison, chaque détail compte pour vous offrir une expérience premium.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section class="timeline-section">
+    <div class="container">
+      <h2 style="text-align:center;font-size:2rem;margin-bottom:12px">Notre <span class="gold">Parcours</span></h2>
+      <p style="text-align:center;color:#888;font-size:.95rem;margin-bottom:48px">Les grandes étapes de Flori's Market</p>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="year">2024</div>
+          <p>Naissance de l'idée Flori's Market — créer une parfumerie en ligne accessible au Bénin.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="year">2025</div>
+          <p>Création de la boutique en ligne et lancement des premières ventes à Cotonou.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="year">2026</div>
+          <p>Expansion du catalogue, intégration Mobile Money et renforcement de la livraison express.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="year">Demain</div>
+          <p>Devenir la référence de la parfumerie en ligne en Afrique de l'Ouest.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="container">
+      <h2>Envie de Découvrir nos Fragrances ?</h2>
+      <p>Parcourez notre collection et trouvez le parfum qui vous ressemble.</p>
+      <a href="boutique.html" class="btn btn-gold">Explorer la Boutique</a>
+    </div>
+  </section>
+
+  <footer class="footer"><p>© 2026 Flori's Market — Tous droits réservés</p></footer>
+
+  <a href="https://wa.me/22990000000" class="whatsapp-float" target="_blank" aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.875.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.88 11.88 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+  <script>
+    function getCart(){return JSON.parse(localStorage.getItem('floris_cart')||'[]')}
+    function updateCount(){document.getElementById('cartCount').textContent=getCart().length}
+    updateCount();
+    function toggleMobile(){document.getElementById('mobileMenu').classList.toggle('active')}
+  </script>
+</body>
+</html>
